@@ -1,0 +1,125 @@
+<!-- DOCTYPE HTML -->
+<html>
+<head>
+	<title>Edge-Match Puzzle</title>
+	<style>
+		#content {
+		    width: 609px;
+		    overflow: hidden;
+		}
+
+		.wrap {
+			position: relative;
+		    width: 810px;
+		    height: 601px;
+		}
+
+		.wrap-sub {
+			width: 100%;
+			position: absolute;
+		}
+		
+		table {
+			position: absolute;
+			border-collapse: collapse;
+			border: 1px black solid;
+		}
+		table td, .empty-cell {
+			width: 200px;
+			height: 200px;
+			border: 1px black solid;
+		}
+		
+		.figure {
+			width: 100px;
+			height: 100px;
+			margin: 50px 51px;
+		}
+		
+		.stripes-a { top: -100px; }
+		.stripes-b { left: -100px; }
+		.stripes-b .figure { transform: rotate(90deg); }
+	</style>
+</head>
+<body>
+	<div id="content"></div>
+	<script src="https://fb.me/react-with-addons-0.13.3.js"></script>
+	<script src="http://fb.me/JSXTransformer-0.12.1.js"></script>
+	<script type="text/jsx">
+
+	const DIM = 3
+	const FIGURES = ["fisher1.png", "fisher2.png", "fisher3.png", "fisher4.png", "fisher5.png"]
+
+	var Square = React.createClass({
+		render: function() {
+			return <img src={this.props.image} className="figure"/>
+		}
+	});
+
+	var Stripe = React.createClass({
+		render: function() {
+			var squares = this.props.images.map(image => <Square image={image}/>)
+			return <div className="stripe">{squares}</div>
+		}
+	})
+
+	var Stripes = React.createClass({
+		getInitialState: function() {
+			let imagesTable = []
+	    	for (var i=0; i < this.props.rows; i++) {
+	    		let stripeImages = []
+				for (let j=0; j < this.props.cols; j++) {
+					stripeImages.push(this.getRandomFigure())
+				}
+	    		imagesTable.push(stripeImages)
+	    	}
+	        return {
+	            imagesTable: imagesTable
+	        }
+	    },
+	    getRandomFigure: function() {
+			let r = Math.floor((Math.random() * this.props.figures.length))
+			return this.props.figures[r]
+		},
+		render: function() {
+			let rows = this.state.imagesTable.map(stripe => <Stripe images={stripe}/>)
+			return <div>{rows}</div>
+		}
+	})
+
+	var EmptyGrid = React.createClass({
+		render: function() {
+			let cols = []
+			for (let i=0; i<this.props.dim; i++) {
+				cols.push(<td className="empty-cell">&nbsp;</td>)
+			}
+			let rows = []
+			for (let i=0; i<this.props.dim; i++) {
+				rows.push(<tr>{cols}</tr>)
+			}
+			return <table border="1">{rows}</table>
+		}
+	})
+
+	var EdgeMatchPuzzleApp = React.createClass({
+	    render: function() {
+	        return 	<div className="wrap">
+	        			<div className="wrap-sub stripes-a">
+	        				<Stripes rows="4" cols="3" figures={this.props.figures}/>
+	        			</div>
+	        			<div className="wrap-sub stripes-b">
+	        				<Stripes rows="3" cols="4" figures={this.props.figures}/>
+	        			</div>
+	        			<div className="wrap-sub">
+	        				<EmptyGrid dim={this.props.dimensions}/>
+	        			</div>
+	        		</div>
+	    }
+	});
+
+	React.render(<EdgeMatchPuzzleApp dimensions={DIM} figures={FIGURES} />, document.getElementById('content'));
+
+	</script>
+
+</body>
+</html>
