@@ -1,0 +1,36 @@
+#content {
+  width: 610px;
+  overflow: hidden;
+}
+
+.wrap {
+position: relative;
+  width: 810px;
+  height: 601px;
+}
+
+.wrap-sub {
+width: 100%;
+position: absolute;
+}
+
+table {
+position: absolute;
+border-collapse: collapse;
+border: 1px black solid;
+}
+table td, .empty-cell {
+width: 200px;
+height: 200px;
+border: 1px black solid;
+}
+
+.figure {
+width: 100px;
+height: 100px;
+margin: 50px 51px;
+}
+
+.stripes-a { top: -100px; }
+.stripes-b { left: -100px; }
+.stripes-b .figure { transform: rotate(90deg); }

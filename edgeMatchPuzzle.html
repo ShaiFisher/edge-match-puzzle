@@ -45,16 +45,18 @@
 	<div id="content"></div>
 	<script src="https://fb.me/react-with-addons-0.13.3.js"></script>
 	<script src="http://fb.me/JSXTransformer-0.12.1.js"></script>
+	<script type="application/javascript" src="js/EdgeMatchPuzzleApp.js"></script>
+
 	<script type="text/jsx">
 
 	const DIM = 3
 	const FIGURES = ["fisher1.png", "fisher2.png", "fisher3.png", "fisher4.png", "fisher5.png"]
 
-	var Square = React.createClass({
+	/*var Square = React.createClass({
 		render: function() {
 			return <img src={this.props.image} className="figure"/>
 		}
-	});
+	});*/
 
 	var Stripe = React.createClass({
 		render: function() {
@@ -117,7 +119,7 @@
 	    }
 	});
 
-	React.render(<EdgeMatchPuzzleApp dimensions={DIM} figures={FIGURES} />, document.getElementById('content'));
+	//React.render(<EdgeMatchPuzzleApp dimensions={DIM} figures={FIGURES} />, document.getElementById('content'));
 
 	</script>
 
